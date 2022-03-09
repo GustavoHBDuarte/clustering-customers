@@ -1,5 +1,6 @@
 # Library imports
 
+print('Starting library imports')
 import pandas as pd
 import numpy as np
 import warnings
@@ -16,10 +17,11 @@ from sklearn.cluster  import KMeans
 from sklearn.metrics  import silhouette_score
 from sklearn.ensemble import RandomForestRegressor
 import umap.umap_ as umap
-
+print('Library imports: OK')
 
 # Loading data ===========================================================================
 
+print('Loading data from SQL database')
 db_credentials = pd.read_csv('s3://gustavoawsbucketds/db_credentials.txt', header=None)
 
 
@@ -50,11 +52,11 @@ df = pd.read_sql_query(query, con=connection)
 
 # closing database connection
 connection.dispose()
-
+print('Loading data from SQL database done')
 
 # 1 - Data description ========================================================================
 
-
+print('\nStarting Data description step')
 # Adjusting column names
 
 df.columns = list(map(lambda x: inflection.underscore(x), df.columns)) #changing to underscore + lower(snakecase)
@@ -74,11 +76,11 @@ df['invoice_date'] = pd.to_datetime(df['invoice_date'], format='%d-%b-%y')
 # Changing column 'customer_id' to int
 
 df['customer_id'] = df['customer_id'].astype(int)
-
+print('Data description step done')
 
 # 2 - Data filtering ========================================================================
 
-
+print('\nStarting Data filtering step')
 # Removing inconsistencies
 
 
@@ -162,7 +164,8 @@ df_2_purchases.to_sql( 'purchases', con=connection, if_exists='append', index=Fa
 
 # closing database connection
 connection.dispose()
-
+print('Purchases cleaned table saved - SQL')
+print('Data filtering step done')
 
 
 
@@ -171,7 +174,7 @@ connection.dispose()
 
 # 3 - Feature engineering ========================================================================
 
-
+print('\nStarting feature engineering step')
 # Feature creation
 
 
@@ -417,13 +420,13 @@ df_aux['avg_unique_basket_size'] = df_aux['n_products']/df_aux['n_purchases'] # 
 
 df_ref = pd.merge(left=df_ref, right=df_aux[['customer_id','avg_unique_basket_size']], how='left', on='customer_id')
 
-
+print('Feature engineering step done')
 
 
 
 
 # 5 - Data preparation ========================================================================
-
+print('\nStarting data preparation step')
 
 #droping NA's generated from the previous step:
 df_ref = df_ref.dropna()
@@ -507,11 +510,11 @@ df_tree_umap = pd.DataFrame()
 df_tree_umap['embeddings_x'] = embedding[:,0]
 df_tree_umap['embeddings_y'] = embedding[:,1]
 
-
+print('Data preparation step done')
 
 
 # 8 - Model training ========================================================================
-
+print('\nStarting model training step')
 
 # K-Means
 
@@ -551,9 +554,12 @@ print('WSS: {:.2f}'.format(model_embedded.inertia_))
 print('Silhouette score: {:.2f}'.format(round(silhouette_score(df_tree_umap, labels_embedded, metric='euclidean', random_state=42),2)))
 
 
+print('Model training step done')
+
+
 
 # 9 - Cluster analysis ========================================================================
-
+print('\nStarting cluster analysis step')
 
 # Adding embedded 'cluster/label' column to df_4_2 (df_4 without data transforming. For cluster profile report)
 
@@ -606,3 +612,7 @@ df_ref.to_sql( 'customers', con=connection, if_exists='append', index=False)
 
 # closing database connection
 connection.dispose()
+print('Table customers added to SQL table')
+print('Cluster analysis step done')
+
+print('\nExecution finished')
