@@ -1,4 +1,4 @@
-<h1><b><font color="#cc0000"><i>Clusteting customers </i></font></b></h1>
+<h1><b><font color="#cc0000"><i>Clustering customers </i></font></b></h1>
 
 
 
