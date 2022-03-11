@@ -73,6 +73,6 @@
 <br>
   <li><font size="3"><b>Cluster analysis:</b> describe the main aspects of Golden customers cluster.</font></li>
 <br>
-  <li><font size="3"><b>Deployment:</b> although solution was developed locally, the data pipeline was deployed to AWS cloud environment (RSD, EC2 and S3). After finishing deployment a Telegram bot is implemented to ease access to sales predictions by store number.</font></li>
+  <li><font size="3"><b>Deployment:</b> although solution was developed locally, the data pipeline was deployed to AWS cloud environment (RSD, EC2 and S3).</font></li>
 <br>  
 </ol>
