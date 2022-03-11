@@ -76,3 +76,22 @@
   <li><font size="3"><b>Deployment:</b> although solution was developed locally, the data pipeline was deployed to AWS cloud environment (RSD, EC2 and S3).</font></li>
 <br>  
 </ol>
+
+
+
+
+
+
+
+<h1>4- Machine Learning models</h1>
+
+<br>
+<p><font size="3">Models evaluated:</font></p>
+
+
+<ul>
+  <li><font size="3">KMeans</font></li>
+  <li><font size="3">Gaussian Mixture Model (GMM)</font></li>
+  <li><font size="3">Hierarchical clustering</font></li>
+  <li><font size="3">DBSCAN</font></li>
+</ul>
